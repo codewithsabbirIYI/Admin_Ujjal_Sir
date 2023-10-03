@@ -10,7 +10,12 @@
                     <div class="menu">
                         <ul>
                             <li><a href="index.php"><i class="fas fa-home"></i> Dashboard</a></li>
+                            <?php if($_SESSION['role_id'] != 4){
+                            ?>
                             <li><a href="all-user.php"><i class="fas fa-user-circle"></i> Users</a></li>
+                            <?php
+                            }
+                            ?>
                             <li><a href="#"><i class="fas fa-images"></i> Banner</a></li>
                             <li><a href="#"><i class="fas fa-comments"></i> Contact Message</a></li>
                             <li><a href="#"><i class="fas fa-globe"></i> Live Site</a></li>

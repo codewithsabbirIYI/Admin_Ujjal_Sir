@@ -5,6 +5,10 @@
     // login check 
     needLogged();
 
+    // role check
+    if($_SESSION['role_id'] != 4){
+
+
     get_header();
     get_sidebar();
 
@@ -187,6 +191,9 @@
 
 <?php
 
-  get_footer();
+get_footer();
+}else{
+header('Location: index.php');
+}
 
 ?>

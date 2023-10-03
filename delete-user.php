@@ -4,15 +4,20 @@
     // login check 
     needLogged();
 
-    $id = $_GET['d'];
-    
+    // role check
+    if($_SESSION['role_id'] != 4){
 
-    $delete_query = "DELETE FROM `users` WHERE `user_id` = '$id'";
-
-    if(mysqli_query($con, $delete_query)){
+        $id = $_GET['d'];
         
-        header('Location: all-user.php');
-        echo "User Delete Successfully";
-    }
 
+        $delete_query = "DELETE FROM `users` WHERE `user_id` = '$id'";
+
+        if(mysqli_query($con, $delete_query)){
+            
+            header('Location: all-user.php');
+            echo "User Delete Successfully";
+        }
+    }else{
+        header('Location: index.php');   
+    }
 ?>
