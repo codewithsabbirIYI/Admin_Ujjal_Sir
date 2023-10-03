@@ -37,6 +37,7 @@
                         <th>Phone</th>
                         <th>Email</th>
                         <th>Username</th>
+                        <th>Role</th>
                         <th>Image</th>
                         <th>Manage</th>
                       </tr>
@@ -45,7 +46,7 @@
 
                     <!-- all data find and loop here  -->
                     <?php
-                      $sel= "SELECT * FROM users";
+                      $sel= "SELECT * FROM users NATURAL JOIN roles ORDER BY user_id DESC";
                       $Q=mysqli_query($con,$sel); 
                       while($data=mysqli_fetch_assoc($Q)){
                     ?>
@@ -56,17 +57,18 @@
                       <td><?= $data["user_phone"]; ?> </td>
                       <td><?= $data["user_email"]; ?></td>
                       <td><?= $data["user_username"]; ?></td>
+                      <td><?= $data["role_name"]; ?></td>
                       <td>
 
                         <?php
 
-                          if($data["user_username"] != ''){
+                          if($data["user_image"] != ''){
                             ?>
                             <img height="40" class="img200" src="uploads/<?= $data['user_image']; ?>" alt="User"/>
                           <?php
                           }else{
                             ?>
-                            <img header="40" src="images/avatar.jpg" alt="User"/>
+                            <img height="40" src="images/avatar.jpg" alt="User"/>
                           <?php
                           }
                         

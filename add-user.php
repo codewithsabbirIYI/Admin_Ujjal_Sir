@@ -13,6 +13,7 @@
       $user_username=$_POST['user_username'];
       $user_password=md5($_POST['user_password']);
       $user_confirm_password=md5($_POST['user_confirm_password']);
+      $user_role=($_POST['user_role']);
 
       // user image find here 
       $user_image= $_FILES['user_image'];
@@ -25,8 +26,8 @@
       }
      
       // insert query here 
-      $insert="INSERT INTO users(user_name,user_phone,user_email,user_username,user_password, user_image)
-      VALUES('$user_name','$user_phone','$user_email','$user_username','$user_password','$imageCustomeName')";
+      $insert="INSERT INTO users(user_name,user_phone,user_email,user_username,user_password, user_image, role_id)
+      VALUES('$user_name','$user_phone','$user_email','$user_username','$user_password','$imageCustomeName','$user_role')";
 
     // empty validation here 
     if(!empty($user_name)){
@@ -34,27 +35,30 @@
         if(!empty($user_username)){
           if(!empty($user_password)){
             if(!empty($user_confirm_password)){
+              if(!empty($user_role)){
 
-              // check is password and confrirm password same 
-              if($user_password === $user_confirm_password){
+                // check is password and confrirm password same 
+                if($user_password === $user_confirm_password){
 
-                // insert query run or data insert here 
-                if(mysqli_query($con,$insert)){
-                  move_uploaded_file($user_image['tmp_name'],'uploads/'.$imageCustomeName);
+                  // insert query run or data insert here 
+                  if(mysqli_query($con,$insert)){
+                    move_uploaded_file($user_image['tmp_name'],'uploads/'.$imageCustomeName);
 
-                  header('Location: all-user.php');
-                  echo "User registration successful";
+                    header('Location: all-user.php');
+                    echo "User registration successful";
+                  }else{
+                    echo "Ops! User registration failed";
+                  }
+                  }else{
+                    echo "Password and confirm password did not match";
+                  }
+
                 }else{
-                  echo "Ops! User registration failed";
+                  echo "Please enter confirm password";
                 }
-                }else{
-                  echo "Password and confirm password did not match";
-                }
-
               }else{
-                echo "Please enter confirm password";
+                echo "Please Select Role";
               }
-              
             }else{
               echo "Please enter your password";
             }
@@ -140,10 +144,24 @@
                         <div class="row mb-3">
                           <label class="col-sm-3 col-form-label col_form_label">User Role<span class="req_star">*</span>:</label>
                           <div class="col-sm-4">
-                            <select class="form-control form_control" id="" name="">
-                              <option>Select Role</option>
-                              <option value="">Superadmin</option>
-                              <option value="">Admin</option>
+                            <select class="form-control form_control" id="" name="user_role">
+                              <option value = "">Select Role</option>
+
+                              <?php
+                                $selrq = "SELECT * FROM roles ORDER BY role_id ASC";
+                                $selr = mysqli_query($con, $selrq);
+
+                                while ($role = mysqli_fetch_assoc($selr)) {
+                                  ?>
+
+                                  <option value="<?= $role['role_id']?>"><?= $role['role_name']?></option>
+
+                                <?php
+                                }
+
+                              ?>
+
+                            
                             </select>
                           </div>
                         </div>

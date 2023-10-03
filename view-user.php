@@ -4,6 +4,11 @@
     get_header();
     get_sidebar();
 
+    $id = $_GET['v'];
+    $sel = "SELECT * FROM users NATURAL JOIN roles WHERE user_id = '$id'";
+    $datas = mysqli_query($con, $sel);
+    $data = mysqli_fetch_assoc($datas);
+
 ?>
 
       <div class="row">
@@ -37,33 +42,45 @@
                             <tr>
                               <td>Name</td>  
                               <td>:</td>  
-                              <td>Saidul Islam Uzzal</td>  
+                              <td><?= $data['user_name']?></td>  
                             </tr>
                             <tr>
                               <td>Phone</td>  
                               <td>:</td>  
-                              <td>01710726035</td>  
+                              <td><?= $data['user_phone']?></td>  
                             </tr>
                             <tr>
                               <td>Email</td>  
                               <td>:</td>  
-                              <td>uzzalbd.creative</td>  
+                              <td><?= $data['user_email']?></td>  
                             </tr>
                             <tr>
                               <td>Username</td>  
                               <td>:</td>  
-                              <td>uzzalbd</td>  
+                              <td><?= $data['user_username']?></td>  
                             </tr>
                             <tr>
                               <td>Role</td>  
                               <td>:</td>  
-                              <td>---</td>  
+                              <td><?= $data['role_name']?></td>  
                             </tr>
                             <tr>
                               <td>Photo</td>  
                               <td>:</td>  
                               <td>
-                                  <img class="img200" src="images/avatar.jpg" alt=""/>  
+                                <?php
+
+                                  if($data["user_image"] != ''){
+                                    ?>
+                                    <img height="80" class="img200" src="uploads/<?= $data['user_image']; ?>" alt="User"/>
+                                  <?php
+                                  }else{
+                                    ?>
+                                    <img height="40" src="images/avatar.jpg" alt="User"/>
+                                  <?php
+                                  }
+
+                                ?>
                               </td>  
                             </tr>
                           </table>
