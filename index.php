@@ -1,7 +1,9 @@
-<?php
-
+<?php 
     // function file load here 
     require_once('functions/functions.php');
+
+    // login check 
+    needLogged();
 
     // header section load here 
     get_header();
@@ -24,7 +26,7 @@
         </div>
         <div class="row">
             <div class="col-md-12 welcome_part">
-                <p><span>Welcome Mr.</span> Saidul Islam Uzzal</p>
+                <p><span>Welcome Mr.</span><?= $_SESSION['user_name']?></p>
             </div>
         </div>
     </div>

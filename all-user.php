@@ -1,6 +1,10 @@
-<?php
+<?php 
 
     require_once('functions/functions.php');
+
+    // login check 
+    needLogged();
+
     get_header();
     get_sidebar();
 
@@ -46,7 +50,7 @@
 
                     <!-- all data find and loop here  -->
                     <?php
-                      $sel= "SELECT * FROM users NATURAL JOIN roles ORDER BY user_id DESC";
+                      $sel= "SELECT * FROM users NATURAL JOIN roles ORDER BY role_id ASC";
                       $Q=mysqli_query($con,$sel); 
                       while($data=mysqli_fetch_assoc($Q)){
                     ?>

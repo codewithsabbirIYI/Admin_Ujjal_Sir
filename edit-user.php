@@ -1,6 +1,9 @@
-<?php
+<?php 
     
     require_once('functions/functions.php');
+    // login check 
+    needLogged();
+
     get_header();
     get_sidebar();
 

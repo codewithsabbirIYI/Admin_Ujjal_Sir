@@ -3,8 +3,8 @@
             <div class="row">
                 <div class="col-md-2 sidebar_part">
                     <div class="user_part">
-                        <img class="" src="images/avatar.png" alt="avatar"/>
-                        <h5>Saidul Islam Uzzal</h5>
+                        <img class="" src="uploads/<?= $_SESSION['user_image']?>" alt="avatar"/>
+                        <h5><?= $_SESSION['user_name']?></h5>
                         <p><i class="fas fa-circle"></i> Online</p>
                     </div>
                     <div class="menu">

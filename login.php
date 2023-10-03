@@ -1,3 +1,53 @@
+<?php 
+    
+    require_once('functions/functions.php');
+
+    
+    
+    if(!empty($_POST)){
+
+        // find form data here 
+        $user_username = $_POST['user_username'];
+        $user_password = md5($_POST['user_password']);
+
+        // field empty check 
+        if(!empty($user_username)){
+            if(!empty($user_password)){
+
+                // check is user is exiest 
+                $select_query = "SELECT * FROM users WHERE user_username = '$user_username' AND user_password = '$user_password'";
+
+                $datas = mysqli_query($con, $select_query);
+
+                $data = mysqli_fetch_assoc($datas);
+
+                if($data){
+
+                    // some user data set on session 
+
+                    $_SESSION['user_id'] = $data['user_id'];
+                    $_SESSION['user_name'] = $data['user_name'];
+                    $_SESSION['user_email'] = $data['user_email'];
+                    $_SESSION['user_username'] = $data['user_username'];
+                    $_SESSION['role_id'] = $data['role_id'];
+                    $_SESSION['user_image'] = $data['user_image'];
+
+                    header('Location: index.php');
+                }else{
+                    echo "Your Username or Password Does't Match";
+                }
+
+            }else{
+                echo "Enter Your Passsword";
+            }
+        }else{
+            echo "Enter Your Username";
+        }
+    }
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -18,12 +68,12 @@
                         <div class="row">
                             <div class="col-md-7 pe-0">
                                 <div class="form-left h-100 py-5 px-5">
-                                    <form action="" class="row g-4">
+                                    <form method="POST" action="" class="row g-4">
                                         <div class="col-12">
                                             <label>Username<span class="text-danger">*</span></label>
                                             <div class="input-group">
                                                 <div class="input-group-text"><i class="fas fa-user"></i></div>
-                                                <input type="text" class="form-control" placeholder="Enter Username">
+                                                <input type="text" class="form-control" placeholder="Enter Username" name="user_username">
                                             </div>
                                         </div>
 
@@ -31,7 +81,7 @@
                                             <label>Password<span class="text-danger">*</span></label>
                                             <div class="input-group">
                                                 <div class="input-group-text"><i class="fas fa-lock"></i></div>
-                                                <input type="text" class="form-control" placeholder="Enter Password">
+                                                <input type="text" class="form-control" placeholder="Enter Password" name="user_password">
                                             </div>
                                         </div>
 

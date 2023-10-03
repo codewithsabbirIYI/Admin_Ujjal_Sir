@@ -1,5 +1,8 @@
-<?php
+<?php 
     require_once('functions/functions.php');
+
+    // login check 
+    needLogged();
 
     $id = $_GET['d'];
     

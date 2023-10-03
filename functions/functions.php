@@ -1,4 +1,4 @@
-<?php
+<?php session_start();
 
     // config file load here 
    require_once('config.php');
@@ -17,4 +17,19 @@
         require_once('includes/footer.php');
     }
 
+    // check id loggin id set 
+    function loggedID(){
+        return $_SESSION['user_id'] ? true : false; 
+    }
+
+    // log in checking function here 
+    function needLogged(){
+        $check = loggedID();
+
+        if(!$check){
+            header('Location: login.php');
+            // echo "Login First";
+        }
+    }
+    
 ?>
