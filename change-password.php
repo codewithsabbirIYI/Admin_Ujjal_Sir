@@ -111,7 +111,9 @@
                             <input type="password" class="form-control form_control" id="" name="user_confirm_password">
                           </div>
                         </div>
-                       
+                        
+                        <div class="col-sm-6">
+                            <a href="#" class="float-end text-primary">Forgot Password?</a>
                         </div>
                        
                     </div>

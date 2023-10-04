@@ -7,41 +7,20 @@
     if(!empty($_POST)){
 
         // find form data here 
-        $user_username = $_POST['user_username'];
         $user_password = md5($_POST['user_password']);
+        $confirm_password = md5($_POST['confirm_password']);
 
         // field empty check 
-        if(!empty($user_username)){
-            if(!empty($user_password)){
+        if(!empty($user_password)){
+            if(!empty($confirm_password)){
 
                 // check is user is exiest 
-                $select_query = "SELECT * FROM users WHERE user_username = '$user_username' AND user_password = '$user_password'";
-
-                $datas = mysqli_query($con, $select_query);
-
-                $data = mysqli_fetch_assoc($datas);
-
-                if($data){
-
-                    // some user data set on session 
-
-                    $_SESSION['user_id'] = $data['user_id'];
-                    $_SESSION['user_name'] = $data['user_name'];
-                    $_SESSION['user_email'] = $data['user_email'];
-                    $_SESSION['user_username'] = $data['user_username'];
-                    $_SESSION['role_id'] = $data['role_id'];
-                    $_SESSION['user_image'] = $data['user_image'];
-
-                    header('Location: index.php');
-                }else{
-                    echo "Your Username or Password Does't Match";
-                }
-
+            
             }else{
-                echo "Enter Your Passsword";
+                echo "Enter Your Comfirm  Passsword";
             }
         }else{
-            echo "Enter Your Username";
+            echo "Enter Your Password";
         }
     }
 
@@ -63,25 +42,25 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-10 offset-lg-1">
-                  <h3 class="mb-3">Login Now</h3>
+                  <h3 class="mb-3">Reset Password</h3>
                     <div class="bg-white shadow rounded">
                         <div class="row">
                             <div class="col-md-7 pe-0">
                                 <div class="form-left h-100 py-5 px-5">
                                     <form method="POST" action="" class="row g-4">
-                                        <div class="col-12">
-                                            <label>Username<span class="text-danger">*</span></label>
-                                            <div class="input-group">
-                                                <div class="input-group-text"><i class="fas fa-user"></i></div>
-                                                <input type="text" class="form-control" placeholder="Enter Username" name="user_username">
-                                            </div>
-                                        </div>
-
+                                       
                                         <div class="col-12">
                                             <label>Password<span class="text-danger">*</span></label>
                                             <div class="input-group">
                                                 <div class="input-group-text"><i class="fas fa-lock"></i></div>
-                                                <input type="text" class="form-control" placeholder="Enter Password" name="user_password">
+                                                <input type="password" class="form-control" placeholder="Enter Password" name="user_password">
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <label>Confirm Password<span class="text-danger">*</span></label>
+                                            <div class="input-group">
+                                                <div class="input-group-text"><i class="fas fa-lock"></i></div>
+                                                <input type="password" class="form-control" placeholder="Enter Password" name="confirm_password">
                                             </div>
                                         </div>
 
@@ -91,13 +70,8 @@
                                                 <label class="form-check-label" for="inlineFormCheck">Remember me</label>
                                             </div>
                                         </div>
-
-                                        <div class="col-sm-6">
-                                            <a href="forgot-password.php" class="float-end text-primary">Forgot Password?</a>
-                                        </div>
-
                                         <div class="col-12">
-                                            <button type="submit" class="btn btn-primary px-4 float-end mt-4">login</button>
+                                            <button type="submit" class="btn btn-primary px-4 float-end mt-4">Save</button>
                                         </div>
                                     </form>
                                 </div>
