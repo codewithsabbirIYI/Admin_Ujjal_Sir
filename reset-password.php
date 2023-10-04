@@ -2,20 +2,44 @@
     
     require_once('functions/functions.php');
 
-    
-    
+    $user_slug = $_GET['rp'];
+  
     if(!empty($_POST)){
 
+        
         // find form data here 
         $user_password = md5($_POST['user_password']);
         $confirm_password = md5($_POST['confirm_password']);
 
+       
         // field empty check 
         if(!empty($user_password)){
+          
             if(!empty($confirm_password)){
 
-                // check is user is exiest 
-            
+                // password and confirm password match 
+                if($user_password === $confirm_password){
+
+                    // find user data here 
+                    // $select_query = "SELECT * FROM `users` WHERE `user_slug` = '$user_slug'";
+                    // $datas = mysqli_query($con, $select_query);
+                    // $data = mysqli_fetch_assoc($datas);
+                    // $user_id = $data['user_id'];
+
+                   
+                    // finally user password update here
+                    $update_query = "UPDATE `users` SET `user_password`='$user_password', WHERE `user_slug` = '$user_slug'";
+                    if(mysqli_query($con, $update_query)){
+                        // header('Location: login.php');
+                      
+                        echo "Password Reset Successfully";
+                    }else{
+                        echo "Opps, Password Reset Failed";
+                    }
+                }else{
+                    echo "password and confirm password not match";
+                }
+                
             }else{
                 echo "Enter Your Comfirm  Passsword";
             }

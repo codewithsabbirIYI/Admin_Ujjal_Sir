@@ -12,7 +12,7 @@
     get_header();
     get_sidebar();
 
-
+    echo uniqid();
     // store data in variable from form 
     if(!empty($_POST)){
       $user_name=$_POST['user_name'];
@@ -22,7 +22,7 @@
       $user_password=md5($_POST['user_password']);
       $user_confirm_password=md5($_POST['user_confirm_password']);
       $user_role=($_POST['user_role']);
-
+      $user_slug = uniqid('U');
       // user image find here 
       $user_image= $_FILES['user_image'];
       // image custome name variable initial here 
@@ -34,8 +34,8 @@
       }
      
       // insert query here 
-      $insert="INSERT INTO users(user_name,user_phone,user_email,user_username,user_password, user_image, role_id)
-      VALUES('$user_name','$user_phone','$user_email','$user_username','$user_password','$imageCustomeName','$user_role')";
+      $insert="INSERT INTO users(user_name,user_slug,user_phone,user_email,user_username,user_password, user_image, role_id)
+      VALUES('$user_name','$user_slug','$user_phone','$user_email','$user_username','$user_password','$imageCustomeName','$user_role')";
 
     // empty validation here 
     if(!empty($user_name)){

@@ -35,7 +35,7 @@
                 mail($to,$subject,$txt,$headers);
 
 
-                header('Location: reset-password.php?rp='.$data['user_id']);
+                header('Location: reset-password.php?rp='.$data['user_slug']);
             }else{
                 echo "This Email Not Found";
             }
