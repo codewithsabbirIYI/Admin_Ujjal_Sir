@@ -1,7 +1,7 @@
 <?php session_start();
 
     // config file load here 
-   require_once('config.php');
+   require_once('./config.php');
    
 
 //    header section find here 

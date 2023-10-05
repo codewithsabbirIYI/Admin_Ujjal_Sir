@@ -1,38 +1,40 @@
 <?php 
-    // function file load here 
-    require_once('functions/functions.php');
+    // find all functionality here 
+    require_once('functions/function.php');
 
-    // login check 
-    needLogged();
-
-    // header section load here 
+    // frontedn header get here
     get_header();
-    
-    // sidebar section load here 
-    get_sidebar();
+
+    // frontedn banner get here
+    get_home_banner();
+
+    // frontedn counter get here
+    get_home_counter();
+
+    // frontedn about get here 
+    get_home_about();
+
+    // frontedn service get here 
+    get_home_service();
+
+    // frontedn feature get here 
+    get_home_feature();
+
+    // frontedn project get here 
+    get_home_project();
+
+    // frontedn project get here 
+    get_home_quote();
+
+    // frontedn project get here 
+    get_home_team();
+
+    // frontedn project get here 
+    get_home_testimonial();
+
+    // frontedn project get here 
+    get_home_footer();
+
 
 ?>
-  
 
-        <div class="row">
-            <div class="col-md-12 breadcumb_part">
-                <div class="bread">
-                    <ul>
-                        <li><a href=""><i class="fas fa-home"></i>Home</a></li>
-                        <li><a href=""><i class="fas fa-angle-double-right"></i>Dashboard</a></li>                             
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 welcome_part">
-                <p><span>Welcome Mr.</span><?= $_SESSION['user_name']?></p>
-            </div>
-        </div>
-    </div>
-
-<?php
-
-   get_footer();
-
-?>
