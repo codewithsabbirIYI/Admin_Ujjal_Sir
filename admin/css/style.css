@@ -60,10 +60,7 @@ body{
     margin-right: 5px;   
 }
 
-/*content part code start*/
-.content_part{
-    
-}
+
 
 .sidebar_part{
     background-color: #252c34;
@@ -103,16 +100,8 @@ body{
    color: green;
 }
 
-.menu{
-    
-}
-
 .menu ul{
     padding-left: 0px;
-}
-
-.menu ul li{
-    
 }
 
 .menu ul li a{
@@ -135,9 +124,6 @@ body{
     margin-right: 5px;   
 }
 
-.content{
-    
-}
 
 .breadcumb_part{
     background-color: #f5f5f5;
@@ -180,10 +166,6 @@ body{
 /*footer part code start*/
 .footer_part{
     background-color: #16171D;
-}
-
-.copyright{
-    
 }
 
 .copyright p{
@@ -248,9 +230,6 @@ span.req_star{
     padding-right: 0px;
 }
 
-.form_control{
-    
-}
 
 .btn_group_manage button{
     font-size: 12px;
@@ -284,4 +263,8 @@ span.req_star{
 .img200{
     max-width: 300px;
     max-height: 200px;
+}
+
+input{
+    text-align: left !important;
 }

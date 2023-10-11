@@ -59,4 +59,8 @@
         require_once('include/footer.php');
     }
 
+    function get_page_header($page_header_title,  $page_header_breadcramp){
+
+        require_once('include/page_header.php');
+    }
 ?>

@@ -11,6 +11,7 @@
                 <div class="col-lg-6 about-text py-5 wow fadeIn" data-wow-delay="0.5s">
                     <div class="p-lg-5 pe-lg-0">
                         <h6 class="text-primary">About Us</h6>
+                        
                         <h1 class="mb-4">25+ Years Experience In Solar & Renewable Energy Industry</h1>
                         <p>Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo erat amet</p>
                         <p><i class="fa fa-check-circle text-primary me-3"></i>Diam dolor diam ipsum</p>

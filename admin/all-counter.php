@@ -8,7 +8,7 @@
     // role check 
     if($_SESSION['role_id'] != 4){
       
-    
+
     get_header();
     get_sidebar();
 
@@ -16,7 +16,7 @@
 
       <div class="row">
           <div class="col-md-12 breadcumb_part">
-              <div class="bread">
+              <div class="bread"> 
                   <ul>
                       <li><a href=""><i class="fas fa-home"></i>Home</a></li>
                       <li><a href=""><i class="fas fa-angle-double-right"></i>Dashboard</a></li>                             
@@ -30,10 +30,10 @@
                 <div class="card-header">
                   <div class="row">
                       <div class="col-md-8 card_title_part">
-                          <i class="fab fa-gg-circle"></i>All User Information
+                          <i class="fab fa-gg-circle"></i>All Counter Information
                       </div>  
                       <div class="col-md-4 card_button_part">
-                          <a href="add-user.php" class="btn btn-sm btn-dark"><i class="fas fa-plus-circle"></i>Add User</a>
+                          <a href="add-counter.php" class="btn btn-sm btn-dark"><i class="fas fa-plus-circle"></i>Add Counter</a>
                       </div>  
                   </div>
                 </div>
@@ -41,56 +41,35 @@
                   <table class="table table-bordered table-striped table-hover custom_table">
                     <thead class="table-dark">
                       <tr>
-                        <th>Name</th>
-                        <th>Phone</th>
-                        <th>Email</th>
-                        <th>Username</th>
-                        <th>Role</th>
-                        <th>Image</th>
-                        <th>Manage</th>
+                        <th>Counter Icon</th>
+                        <th>Counter Number</th>
+                        <th>Counter Title</th>
+                        <th>Counter Text</th>
+                        <th>Action</th>
                       </tr>
                     </thead>
                     <tbody>
 
                     <!-- all data find and loop here  -->
                     <?php
-                      $sel= "SELECT * FROM users NATURAL JOIN roles ORDER BY role_id ASC";
+                      $sel= "SELECT * FROM counters ORDER BY id ASC";
                       $Q=mysqli_query($con,$sel); 
                       while($data=mysqli_fetch_assoc($Q)){
                     ?>
 
                     <!-- table item here  -->
                     <tr>
-                      <td><?php echo $data['user_name']; ?></td>
-                      <td><?= $data["user_phone"]; ?> </td>
-                      <td><?= $data["user_email"]; ?></td>
-                      <td><?= $data["user_username"]; ?></td>
-                      <td><?= $data["role_name"]; ?></td>
-                      <td>
-
-                        <?php
-
-                          if($data["user_image"] != ''){
-                            ?>
-                            <img height="40" class="img200" src="uploads/<?= $data['user_image']; ?>" alt="User"/>
-                          <?php
-                          }else{
-                            ?>
-                            <img height="40" src="images/avatar.jpg" alt="User"/>
-                          <?php
-                          }
-                        
-                        ?>
-
-                      </td>
+                      <td><i class="<?= $data["counter_icon"];?> text-black"></i></td>
+                      <td><?= $data["counter_number"]; ?> </td>
+                      <td><?= $data["counter_title"]; ?></td>
+                      <td><?= $data["counter_text"]; ?></td>                     
                       <td>
                           <div class="btn-group btn_group_manage" role="group">
                             <button type="button" class="btn btn-sm btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Manage</button>
                             <ul class="dropdown-menu">
-                              <li><a class="dropdown-item" href="view-user.php?v=<?= $data["user_id"]; ?>">View</a></li>
-                              <li><a class="dropdown-item" href="edit-user.php?e=<?= $data["user_id"]; ?>">Edit</a></li>
-                              <li><a class="dropdown-item" href="change-password.php?p=<?= $data["user_id"]; ?>">Change Password</a></li>
-                              <li><a class="dropdown-item" href="delete-user.php?d=<?= $data["user_id"]; ?>">Delete</a></li>
+                              <li><a class="dropdown-item" href="view-counter.php?v=<?= $data["id"]; ?>">View</a></li>
+                              <li><a class="dropdown-item" href="edit-counter.php?e=<?= $data["id"]; ?>">Edit</a></li>
+                              <li><a class="dropdown-item" href="delete-counter.php?d=<?= $data["id"]; ?>">Delete</a></li>
                             </ul>
                           </div>
                       </td>
@@ -125,12 +104,3 @@
 }
 
 ?>
-
-
-
-
-
-
-
-
-

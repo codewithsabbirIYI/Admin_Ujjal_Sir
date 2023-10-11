@@ -14,5 +14,24 @@
     </footer>
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/custom.js"></script>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+
+    <script>
+
+        var addition = (num1, num2) => {
+            var c =num1 +num2;
+
+            console.log(c);
+        }
+
+        addition(10, 20);
+
+    </script>
+
+
+
   </body>
 </html>

@@ -17,199 +17,213 @@
   $data = mysqli_fetch_assoc($datas);
 
 
+   // store data in variable from form 
+   if (!empty($_POST)) {
+    $user_name = $_POST['user_name'];
+    $user_phone = $_POST['user_phone'];
+    $user_email = $_POST['user_email'];
+    $user_role = ($_POST['user_role']);
+    $user_slug = uniqid('U');
+    // user image find here 
+    $user_image = $_FILES['user_image'];
+    // image custome name variable initial here 
+    $imageCustomeName = "";
 
-    // store data in variable from form 
-    if(!empty($_POST)){
-      $user_name=$_POST['user_name'];
-      $user_phone=$_POST['user_phone'];
-      $user_email=$_POST['user_email'];
-      // $user_username=$_POST['user_username'];
-      // $user_password=md5($_POST['user_password']);
-      // $user_confirm_password=md5($_POST['user_confirm_password']);
-      $user_role=($_POST['user_role']);
-
-      // user image find here 
-      $user_image= $_FILES['user_image'];
-
-      
-     
-      // update query here 
-      $update="UPDATE users SET user_name = '$user_name', user_email = '$user_email', role_id = '$user_role' WHERE user_id = '$id' ";
-      
 
     // empty validation here 
-    if(!empty($user_name)){
-      if(!empty($user_email)){
-        // if(!empty($user_username)){
-        //   if(!empty($user_password)){
-        //     if(!empty($user_confirm_password)){
-              if(!empty($user_role)){
+    if (!empty($user_name)) {
+      if (!empty($user_phone)) {
+        if (!empty($user_email)) { 
+          if (!empty($user_role)) {
 
-                // check is password and confrirm password same 
-                // if($user_password === $user_confirm_password){
+              // check is image given for update 
+              if ($user_image['name']!= '') {
+              // image custom name here 
+              $imageCustomeName = 'user_' . time() . '_' . rand(10000, 1000000) . '.' . pathinfo($user_image['name'], PATHINFO_EXTENSION); 
 
-                  // update query run or data update here 
-                  if(mysqli_query($con,$update)){
-                   
-                    // user image custome name set from here 
-                      if($user_image['name']!=''){
+              // update query here 
+              $update = "UPDATE `users` SET `user_name`='$user_name',`user_phone`='$user_phone',`user_email`='$user_email',`role_id`='$user_role', `user_image` = '$imageCustomeName' WHERE `user_id` = '$id'";
 
-                        $imageCustomeName='user_'.time().'_'.rand(10000,1000000).'.'.pathinfo($user_image['name'],PATHINFO_EXTENSION);
-                          // image update query here 
-                          $update="UPDATE users SET user_image = '$imageCustomeName' WHERE user_id = '$id' ";
-                                   
-                          if(mysqli_query($con, $update))
+                // insert query run or data insert here 
+                if (mysqli_query($con, $update)) {
+                move_uploaded_file($user_image['tmp_name'], 'uploads/' . $imageCustomeName);
 
-                              move_uploaded_file($user_image['tmp_name'],'uploads/'.$imageCustomeName);
-                              header('Location: view-user.php?v='.$id);
-                            
-                        }else{
-                          echo "image update failed";
-                        }
+                $_SESSION['success'] = "User registration successful";
 
-                    header('Location: view-user.php?v='.$id);
-                    
-                  }else{
-                    echo "Ops! User Update failed";
-                  }
-                  // }else{
-                  //   echo "Password and confirm password did not match";
-                  // }
+                header('Location: all-user.php?'.$_SESSION['success']);
+
+                } else {
+                  $_SESSION['error'] = "Ops! User registration failed";
+                }
 
                 }else{
-                  echo "Please Select Role";                 
+                    // update query here 
+                    $update = "UPDATE `users` SET`user_name`='$user_name',`user_phone`='$user_phone',`user_email`='$user_email',`role_id`='$user_role' WHERE `user_id` = '$id'";
+
+                    // data insert with out image 
+                    if(mysqli_query($con, $update)){
+                      
+                      $_SESSION['success'] = "User registration successful";
+
+                      header('Location: all-user.php?'.$_SESSION['success']);
+                    
+                    }  
                 }
-          //     }else{
-          //       echo "Please enter confirm password";
-          //     }
-          //   }else{
-          //     echo "Please enter your password";
-          //   }
-      
-          // }else{
-          //   echo "Please enter your Username";
-          // }
-      
-        }else{
-          echo "Please enter your email address";
+          
+          } else {
+            $user_role_error = "Please Select user Role";
+          }
+        } else {
+          $user_email_error = "Please enter your email";
         }
-
-      }else{
-        echo "Please enter your name";
+      } else {
+        $user_phone_error = "Please enter your Phone";
       }
-
+    } else {
+      $user_name_error = "Please Enter Your Name";
     }
+  }
 
 ?>
 
 
-      <div class="row">
-          <div class="col-md-12 breadcumb_part">
-              <div class="bread">
-                  <ul>
-                      <li><a href=""><i class="fas fa-home"></i>Home</a></li>
-                      <li><a href=""><i class="fas fa-angle-double-right"></i>Dashboard</a></li>                             
-                  </ul>
+<div class="row">
+    <div class="col-md-12 breadcumb_part">
+      <div class="bread">
+        <ul>
+          <li><a href=""><i class="fas fa-home"></i>Home</a></li>
+          <li><a href=""><i class="fas fa-angle-double-right"></i>Dashboard</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 ">
+      <form method="post" action="" enctype="multipart/form-data">
+        <div class="card mb-3">
+          <div class="card-header">
+            <div class="row">
+              <div class="col-md-8 card_title_part">
+                <i class="fab fa-gg-circle"></i>User Edit
               </div>
+              <div class="col-md-4 card_button_part">
+                <a href="all-user.php" class="btn btn-sm btn-dark"><i class="fas fa-th"></i>All User</a>
+              </div>
+            </div>
           </div>
-      </div>
-      <div class="row">
-          <div class="col-md-12 ">
-              <form method="post" action="" enctype="multipart/form-data">
-                  <div class="card mb-3">
-                    <div class="card-header">
-                      <div class="row">
-                          <div class="col-md-8 card_title_part">
-                              <i class="fab fa-gg-circle"></i>User Update
-                          </div>  
-                          <div class="col-md-4 card_button_part">
-                              <a href="all-user.php" class="btn btn-sm btn-dark"><i class="fas fa-th"></i>All User</a>
-                          </div>  
-                      </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="row mb-3">
-                          <label class="col-sm-3 col-form-label col_form_label">Name<span class="req_star">*</span>:</label>
-                          <div class="col-sm-7">
-                            <input type="text" class="form-control form_control" id="" name="user_name" value="<?=$data['user_name']?>">
-                          </div>
-                        </div>
-                        <div class="row mb-3">
-                          <label class="col-sm-3 col-form-label col_form_label">Phone:</label>
-                          <div class="col-sm-7">
-                            <input type="text" class="form-control form_control" id="" name="user_phone" value="<?=$data['user_phone']?>">
-                          </div>
-                        </div>
-                        <div class="row mb-3">
-                          <label class="col-sm-3 col-form-label col_form_label">Email<span class="req_star">*</span>:</label>
-                          <div class="col-sm-7">
-                            <input type="email" class="form-control form_control" id="" name="user_email" value="<?=$data['user_email']?>">
-                          </div>
-                        </div>
-                        <div class="row mb-3">
-                          <label class="col-sm-3 col-form-label col_form_label">Username<span class="req_star">*</span>:</label>
-                          <div class="col-sm-7">
-                            <input  type="text" class="form-control form_control" id="" value="<?=$data['user_username']?>" readonly>
-                          </div>
-                        </div>
-                     
-                        <div class="row mb-3">
-                          <label class="col-sm-3 col-form-label col_form_label">User Role<span class="req_star">*</span>:</label>
-                          <div class="col-sm-4">
-                            <select class="form-control form_control" id="" name="user_role">
-                              <option value = "">Select Role</option>
+          <div class="card-body">
+            <div class="row mb-3">
+              <label class="col-sm-3 col-form-label col_form_label">Name<span class="req_star">*</span>:</label>
+              <div class="col-sm-7">
+                <input type="text" class="form-control form_control <?php if (isset($user_name_error)) echo 'is-invalid' ?>" id="" name="user_name" value="<?= (isset($_POST['user_name'])) ? $_POST['user_name'] : $data['user_name']?>">
+                <?php
+                if (isset($user_name_error)) {
+                ?>
+                  <span class="text-danger"></span><?= $user_name_error; ?></span>
+                <?php
+                }
+                ?>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <label class="col-sm-3 col-form-label col_form_label">Phone:</label>
+              <div class="col-sm-7">
+                <input type="text" class="form-control form_control <?php if (isset($user_phone_error)) echo 'is-invalid' ?>" id="" name="user_phone" value="<?= (isset($_POST['user_phone'])) ? $_POST['user_phone'] : $data['user_phone']?>">
+                <?php
+                if (isset($user_phone_error)) {
+                ?>
+                  <span class="text-danger"></span><?= $user_phone_error; ?></span>
+                <?php
+                }
+                ?>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <label class="col-sm-3 col-form-label col_form_label">Email<span class="req_star">*</span>:</label>
+              <div class="col-sm-7">
+                <input type="email" class="form-control <?php if (isset($user_email_error)) echo 'is-invalid' ?>" id="input" name="user_email" value="<?= (isset($_POST['user_email'])) ? $_POST['user_email'] : $data['user_email']?>">
+                <?php
+                if (isset($user_email_error)) {
+                ?>
+                  <span class="text-danger"></span><?= $user_email_error; ?></span>
+                <?php
+                }
+                ?>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <label class="col-sm-3 col-form-label col_form_label">Username<span class="req_star">*</span>:</label>
+              <div class="col-sm-7">
+                <input type="text" style="text-align: left;" class="form-control " id="input" name="user_username" value="<?= $data['user_username']?>" disabled>
+              
+              </div>
+            </div>
+          
+            <div class="row mb-3">
+              <label class="col-sm-3 col-form-label col_form_label">User Role<span class="req_star">*</span>:</label>
+              <div class="col-sm-4">
+                <select class="form-control form_control" id="" name="user_role">
+                  <option value="">Select Role</option>
 
-                              <?php
-                                $selrq = "SELECT * FROM roles ORDER BY role_id ASC";
-                                $selr = mysqli_query($con, $selrq);
+                  <?php
+                  $selrq = "SELECT * FROM roles ORDER BY role_id ASC";
+                  $selr = mysqli_query($con, $selrq);
 
-                                while ($role = mysqli_fetch_assoc($selr)) {
-                                  ?>
+                  while ($role = mysqli_fetch_assoc($selr)) {
+                  ?>
 
-                                  <option value="<?= $role['role_id']?>"   <?php if($role['role_id']==$data['role_id']){echo 'selected';} ?>   ><?= $role['role_name']?></option>
+                    <option value="<?= $role['role_id'] ?>" <?= ($role['role_id'] == $data['role_id'])? "selected" : "" ?>><?= $role['role_name'] ?></option>
 
-                                <?php
-                                }
+                  <?php
+                  }
 
-                              ?>
+                  ?>
+                  <?php
+                  if (isset($user_role_error)) {
+                    ?>
+                      <span class="text-danger"></span><?= $user_role_error; ?></span>
+                    <?php
+                    }
+                  ?>
+                </select>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <label class="col-sm-3 col-form-label col_form_label">Photo:</label>
+              <div class="col-sm-4">
+                <input type="file" class="form-control form_control" id="" name="user_image">
+              </div>
+            </div>
+            <div class="row mb-3">
+              <label class="col-sm-3 col-form-label col_form_label"></label>
+              <div class="col-sm-4">
+              <?php
 
-                            
-                            </select>
-                          </div>
-                        </div>
-                        <div class="row mb-3">
-                          <label class="col-sm-3 col-form-label col_form_label">Photo:</label>
-                          <div class="col-sm-4">
-                            <input type="file" class="form-control form_control" id="" name="user_image">
-                          </div>
-                          <div class="col-sm-4">
-                            <?php
+                  if($data["user_image"] != ''){
+                    ?>
+                    <img height="40" class="img200" src="uploads/<?= $data['user_image']; ?>" alt="User"/>
+                  <?php
+                  }else{
+                    ?>
+                    <img height="40" src="images/avatar.jpg" alt="User"/>
+                  <?php
+                  }
 
-                              if($data["user_image"] != ''){
-                                ?>
-                                <img height="80" class="img200" src="uploads/<?= $data['user_image']; ?>" alt="User"/>
-                              <?php
-                              }else{
-                                ?>
-                                <img height="40" src="images/avatar.jpg" alt="User"/>
-                              <?php
-                              }
-
-                            ?>
-                          </div>
-                        </div>
-                    </div>
-                    <div class="card-footer text-center">
-                      <button type="submit" class="btn btn-sm btn-dark">Update</button>
-                    </div>  
-                  </div>
-              </form>
+                  ?>
+              </div>
+            </div>
           </div>
-      </div>
+          <div class="card-footer text-center">
+            <button type="submit" class="btn btn-sm btn-dark">Update</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
   </div>
 
-<?php
 
+<?php
 get_footer();
 }else{
 header('Location: index.php');

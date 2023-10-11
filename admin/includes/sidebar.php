@@ -16,7 +16,11 @@
                             <?php
                             }
                             ?>
-                            <li><a href="#"><i class="fas fa-images"></i> Banner</a></li>
+                            <li><a href="all-banner.php"><i class="fas fa-images"></i> Banner</a></li>
+                            <li><a href="all-counter.php"><i class="fas fa-images"></i> Counter</a></li>
+                            <li><a href="all-about.php"><i class="fas fa-images"></i> About</a></li>
+                            <li><a href="all-service.php"><i class="fas fa-images"></i> Service</a></li>
+
                             <li><a href="#"><i class="fas fa-comments"></i> Contact Message</a></li>
                             <li><a href="#"><i class="fas fa-globe"></i> Live Site</a></li>
                             <li><a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
