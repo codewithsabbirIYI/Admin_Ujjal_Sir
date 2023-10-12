@@ -88,9 +88,9 @@
                           <div class="btn-group btn_group_manage" role="group">
                             <button type="button" class="btn btn-sm btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Manage</button>
                             <ul class="dropdown-menu">
-                              <li><a class="dropdown-item" href="view-service.php?v=<?= $data["service_id"]; ?>">View</a></li>
-                              <li><a class="dropdown-item" href="edit-service.php?e=<?= $data["service_id"]; ?>">Edit</a></li>
-                              <li><a class="dropdown-item" href="delete-service.php?d=<?= $data["service_id"]; ?>">Delete</a></li>
+                              <li><a class="dropdown-item" href="view-service.php?v=<?= $data["id"]; ?>">View</a></li>
+                              <li><a class="dropdown-item" href="edit-service.php?e=<?= $data["id"]; ?>">Edit</a></li>
+                              <li><a class="dropdown-item" href="delete-service.php?d=<?= $data["id"]; ?>">Delete</a></li>
                             </ul>
                           </div>
                       </td>

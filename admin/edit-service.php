@@ -8,6 +8,12 @@
     // role check
     if($_SESSION['role_id'] != 4){
 
+    // find service data here 
+    $id = $_GET['e'];
+    $sel = "SELECT * FROM services WHERE id = '$id'";
+    $datas = mysqli_query($con, $sel);
+    $data = mysqli_fetch_assoc($datas);
+
 
     get_header();
     get_sidebar();
@@ -23,11 +29,6 @@
       $service_image= $_FILES['service_image'];
       $service_icon= $_POST['service_icon'];
 
-   
-      // user image custome name set from here 
-      if($service_image['name']!=''){
-      $imageCustomeName='service_'.time().'_'.rand(10000,1000000).'.'.pathinfo($service_image['name'],PATHINFO_EXTENSION);
-      }
   
     // empty validation here 
     if(!empty($service_title)){
@@ -35,26 +36,42 @@
         if(!empty($service_text)){
           if(!empty($button_link)){
             if(!empty($button_text)){
-              if(!empty($service_image['name'])){
-                     
-                  // insert query here 
-                  $insert="INSERT INTO services(service_title,service_icon,service_text,button_link,button_text,service_image)
-                  VALUES('$service_title','$service_icon','$service_text','$button_link','$button_text','$imageCustomeName')";
 
-                  // insert query run or data insert here 
-                  if(mysqli_query($con,$insert)){
+               // check image is given for update 
+               if(!empty($service_image['name'])){
 
-                    move_uploaded_file($service_image['tmp_name'],'uploads/'.$imageCustomeName);
+                $imageCustomeName='service_'.time().'_'.rand(10000,1000000).'.'.pathinfo($service_image['name'],PATHINFO_EXTENSION);
+                // image update query here 
 
-                    header('Location: all-service.php');
-                    $_SESSION['success'] = "service Insert successful";
-                  }else{
-                    $_SESSION['success'] = "Ops! service Insert failed";
-                  }
-                 
+                $update="UPDATE `services` SET `service_title`='$service_title',`service_icon`='$service_icon',`service_text`='$service_text',`button_link`='$button_link',`button_text`=' $button_text', `service_image` = '$imageCustomeName' WHERE id ='$id'";
+
+                // insert query run or data insert here 
+                if(mysqli_query($con,$update)){
+                  
+                  move_uploaded_file($service_image['tmp_name'],'uploads/'.$imageCustomeName);
+                
+                  header('Location: all-service.php');
+                  $_SESSION['success'] = "service Insert successful";
+                  
                 }else{
-                  $service_image_error = "Please Select service Image";
+                  $_SESSION['error'] = "Ops! service Insert failed";
                 }
+               
+              }else{
+                
+                $update="UPDATE `services` SET `service_title`='$service_title',`service_icon`='$service_icon',`service_text`='$service_text',`button_link`='$button_link',`button_text`=' $button_text' WHERE id ='$id'";
+
+                if(mysqli_query($con, $update)){
+
+
+                  header('Location: all-service.php');
+                  echo$_SESSION['success'] = "service update without image successfully";
+
+                }else{
+                  $_SESSION['error'] = "service update faild";
+                }
+              }
+
               }else{
                 $button_text_error = "Please enter Button Text";
               }
@@ -99,7 +116,7 @@
                               <i class="fab fa-gg-circle"></i>Add services
                           </div>  
                           <div class="col-md-4 card_button_part">
-                              <a href="all-service.php" class="btn btn-sm btn-dark"><i class="fas fa-th"></i>All services</a>
+                              <a href="all-service.php" class="btn btn-sm btn-dark"><i class="fas fa-th"></i>Services Info</a>
                           </div>  
                       </div>
                     </div>
@@ -107,7 +124,7 @@
                         <div class="row mb-3">
                           <label class="col-sm-3 col-form-label col_form_label">Service Title:<span class="req_star">*</span>:</label>
                           <div class="col-sm-7">
-                            <input type="text" class="form-control <?php if (isset($service_title_error)) echo 'is-invalid' ?>" id="" name="service_title" value = "<?php if(isset($_POST['service_title'])) echo  $_POST['service_title']?>">
+                            <input type="text" class="form-control <?php if (isset($service_title_error)) echo 'is-invalid' ?>" id="" name="service_title" value = "<?= (isset($_POST['service_title'])) ? $_POST['service_title'] : $data['service_title']?>">
                             <?php
                             if (isset($service_title_error)) {
                             ?>
@@ -121,7 +138,7 @@
                         <div class="row mb-3">
                           <label class="col-sm-3 col-form-label col_form_label">Service Icon:<span class="req_star">*</span>:</label>
                           <div class="col-sm-7">
-                            <input type="text" class="form-control <?php if (isset($service_icon_error)) echo 'is-invalid' ?>" id="service_icon" name="service_icon" value = "<?php if(isset($_POST['service_icon'])) echo  $_POST['service_icon']?>">     
+                            <input type="text" class="form-control <?php if (isset($service_icon_error)) echo 'is-invalid' ?>" id="service_icon" name="service_icon" value = "<?= (isset($_POST['service_icon'])) ? $_POST['service_icon'] : $data['service_icon']?>">     
                             <?php 
                                 if(isset($service_icon_error)){
                             ?>
@@ -159,7 +176,7 @@
                         <div class="row mb-3">
                           <label class="col-sm-3 col-form-label col_form_label">Service Text:</label>
                           <div class="col-sm-7">
-                            <input type="text" class="form-control <?php if (isset($service_text_error)) echo 'is-invalid' ?>" id="" name="service_text" value = "<?php if(isset($_POST['service_text'])) echo  $_POST['service_text']?>">
+                            <input type="text" class="form-control <?php if (isset($service_text_error)) echo 'is-invalid' ?>" id="" name="service_text" value = "<?= (isset($_POST['service_text'])) ? $_POST['service_text'] : $data['service_text']?>">
                             <?php
                             if (isset($service_text_error)) {
                             ?>
@@ -172,7 +189,7 @@
                         <div class="row mb-3">
                           <label class="col-sm-3 col-form-label col_form_label">Button link:</label>
                           <div class="col-sm-7">
-                            <input type="text" class="form-control <?php if (isset($service_link_error)) echo 'is-invalid' ?>" id="" name="button_link" value = "<?php if(isset($_POST['button_link'])) echo  $_POST['button_link']?>">
+                            <input type="text" class="form-control <?php if (isset($service_link_error)) echo 'is-invalid' ?>" id="" name="button_link" value = "<?= (isset($_POST['button_link'])) ? $_POST['button_link'] : $data['button_link']?>">
                             <?php
                             if (isset($service_link_error)) {
                             ?>
@@ -185,7 +202,7 @@
                         <div class="row mb-3">
                           <label class="col-sm-3 col-form-label col_form_label">Button Text:</label>
                           <div class="col-sm-7">
-                            <input type="text" class="form-control <?php if (isset($button_text_error)) echo 'is-invalid' ?>" id="" name="button_text" value = "<?php if(isset($_POST['button_text'])) echo  $_POST['button_text']?>">
+                            <input type="text" class="form-control <?php if (isset($button_text_error)) echo 'is-invalid' ?>" id="" name="button_text" value = "<?= (isset($_POST['button_text'])) ? $_POST['button_text'] : $data['button_text']?>">
                             <?php
                             if (isset($button_text_error)) {
                             ?>
@@ -200,15 +217,25 @@
                           <label class="col-sm-3 col-form-label col_form_label">Service Photo:</label>
                           <div class="col-sm-4">
                             <input type="file" class="form-control <?php if (isset($service_image_error)) echo 'is-invalid' ?>" id="" name="service_image">
-                            <?php
-                            if (isset($service_image_error)) {
-                            ?>
-                              <span class="text-danger"></span><?= $service_image_error; ?></span>
-                            <?php
-                            }
-                            ?>
                           </div>
                         </div>
+                        <div class="row mb-3">
+                          <label class="col-sm-3 col-form-label col_form_label"></label>
+                          <div class="col-sm-4">
+                            <?php
+
+                              if($data["service_image"] != ''){
+                                ?>
+                                <img height="80" class="img200" src="uploads/<?= $data['service_image']; ?>" alt="service"/>
+                              <?php
+                              }else{
+                                ?>
+                                <img height="40" src="images/avatar.jpg" alt="User"/>
+                              <?php
+                              }
+
+                            ?>
+                          </div>
                     </div>
                     <div class="card-footer text-center">
                       <button type="submit" class="btn btn-sm btn-dark">Save</button>
